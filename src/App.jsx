@@ -121,11 +121,16 @@ const faqItems = [
   { q: 'Vad är en skolkurator?', a: 'En skolkurator är en utbildad socionom som arbetar på skolan för att stötta elever med sociala, emotionella och praktiska frågor. Kuratorn är inte en lärare och betygsätter inte.' },
   { q: 'Måste jag berätta varför jag vill prata?', a: 'Nej! Du kan boka tid eller komma förbi utan att förklara exakt vad det gäller. Det räcker med att du vill prata.' },
   { q: 'Berättar kuratorn för mina föräldrar?', a: 'Kuratorn har tystnadsplikt. Det du berättar stannar hos kuratorn – med undantag om det handlar om att du eller någon annan far illa, då kan kuratorn behöva agera.' },
-  { q: 'Vad händer om jag skickar ett mejl via appen?', a: 'Ditt meddelande går direkt till kuratorn som svarar så snart som möjligt. Du kan vara anonym om du vill.' },
+  { q: 'Vad händer om jag skickar ett mejl via appen?', a: 'När du trycker på "Skicka" öppnas din mejlapp med ett färdigskrivet meddelande till kuratorn. Du kan skicka det direkt eller ändra det först.' },
   { q: 'Kan jag prata med kuratorn om en kompis?', a: 'Ja, absolut. Du kan berätta om du är orolig för en vän och få råd om hur du kan hjälpa.' },
   { q: 'Kostar det något?', a: 'Nej, kuratorns tjänster är helt kostnadsfria för alla elever på skolan.' },
   { q: 'Måste jag ha en allvarlig anledning?', a: 'Nej! Du kan komma till kuratorn för stort och smått. Ingen anledning är för liten.' },
   { q: 'Kan jag gå dit utan att lärarna ser?', a: 'Ja. Du kan boka tid diskret via appen eller mejl. Kuratorn informerar inte dina lärare om att du kommit.' },
+]
+
+const kuratorer = [
+  { namn: 'Mustafa Douglah', titel: 'Skolkurator', avatar: '👨‍💼', bg: '#E8E7FF', email: 'mustafa.douglah@enkoping.se' },
+  { namn: 'Jenny Elgfors', titel: 'Skolkurator', avatar: '👩‍💼', bg: '#FFE7F3', email: 'jenny.elgfors@enkoping.se' },
 ]
 
 const PURPLE = '#534AB7'
@@ -134,18 +139,14 @@ const PURPLE_MID = '#dddaf5'
 
 const s = {
   app: { maxWidth: 720, margin: '0 auto', padding: '0 0 3rem' },
-
-  // HEADER
   headerBg: {
     background: `linear-gradient(160deg, ${PURPLE_LIGHT} 0%, #f5f4ff 100%)`,
     padding: '2rem 1.5rem 1.5rem',
     textAlign: 'center',
     borderBottom: `1px solid ${PURPLE_MID}`,
   },
-  headerTitle: { fontSize: 22, fontWeight: 600, color: '#1a1a1a', marginBottom: 6, fontFamily: 'DM Sans, sans-serif' },
+  headerTitle: { fontSize: 22, fontWeight: 600, color: '#1a1a1a', marginBottom: 6 },
   headerSub: { fontSize: 14, color: '#666', lineHeight: 1.6, maxWidth: 440, margin: '0 auto 1.5rem' },
-
-  // KURATOR CARDS
   kuratorsRow: { display: 'flex', gap: 12, justifyContent: 'center', marginBottom: '0.5rem', flexWrap: 'wrap' },
   kuratorCard: {
     background: '#fff',
@@ -159,48 +160,19 @@ const s = {
     flex: '1 1 200px',
     maxWidth: 280,
   },
-  kuratorAvatar: {
-    width: 52,
-    height: 52,
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 24,
-    flexShrink: 0,
-  },
+  kuratorAvatar: { width: 52, height: 52, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, flexShrink: 0 },
   kuratorName: { fontSize: 14, fontWeight: 600, color: '#1a1a1a', marginBottom: 2 },
   kuratorTitle: { fontSize: 12, color: '#888' },
-
-  // TABS
   tabs: { display: 'flex', gap: 0, borderBottom: `1px solid ${PURPLE_MID}`, overflowX: 'auto', background: '#fff' },
   tab: (a) => ({
-    padding: '12px 16px',
-    fontSize: 13,
-    color: a ? PURPLE : '#888',
-    cursor: 'pointer',
-    borderBottom: a ? `2px solid ${PURPLE}` : '2px solid transparent',
-    marginBottom: -1,
-    background: 'none',
-    border: 'none',
-    borderBottom: a ? `2px solid ${PURPLE}` : '2px solid transparent',
-    fontWeight: a ? 500 : 400,
-    fontFamily: 'DM Sans, sans-serif',
-    whiteSpace: 'nowrap',
-    flexShrink: 0,
+    padding: '12px 16px', fontSize: 13, color: a ? PURPLE : '#888', cursor: 'pointer',
+    borderBottom: a ? `2px solid ${PURPLE}` : '2px solid transparent', marginBottom: -1,
+    background: 'none', border: 'none', fontWeight: a ? 500 : 400,
+    fontFamily: 'DM Sans, sans-serif', whiteSpace: 'nowrap', flexShrink: 0,
   }),
-
-  // CONTENT
   content: { padding: '1.5rem 1.25rem' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10, marginBottom: '1.5rem' },
-  card: (open) => ({
-    background: open ? PURPLE_LIGHT : '#fff',
-    border: open ? `1.5px solid ${PURPLE}` : `1px solid #e0ddd6`,
-    borderRadius: 14,
-    padding: '1rem',
-    cursor: 'pointer',
-    transition: 'all 0.15s',
-  }),
+  card: (open) => ({ background: open ? PURPLE_LIGHT : '#fff', border: open ? `1.5px solid ${PURPLE}` : `1px solid #e0ddd6`, borderRadius: 14, padding: '1rem', cursor: 'pointer', transition: 'all 0.15s' }),
   cardIcon: { fontSize: 22, marginBottom: 8, display: 'block' },
   cardTitle: { fontSize: 14, fontWeight: 500, color: '#1a1a1a', marginBottom: 4 },
   cardSub: { fontSize: 12, color: '#888', lineHeight: 1.5 },
@@ -218,13 +190,7 @@ const s = {
   bokningTitle: { fontSize: 15, fontWeight: 600, marginBottom: 8, color: '#1a1a1a' },
   bokningText: { fontSize: 14, color: '#555', lineHeight: 1.7 },
   faqItem: { borderBottom: `1px solid #ece9f6`, overflow: 'hidden' },
-  faqQ: (open) => ({
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    padding: '14px 0', cursor: 'pointer', fontSize: 14,
-    fontWeight: open ? 500 : 400, color: open ? PURPLE : '#1a1a1a',
-    background: 'none', border: 'none', width: '100%', textAlign: 'left',
-    fontFamily: 'DM Sans, sans-serif', gap: 8,
-  }),
+  faqQ: (open) => ({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', cursor: 'pointer', fontSize: 14, fontWeight: open ? 500 : 400, color: open ? PURPLE : '#1a1a1a', background: 'none', border: 'none', width: '100%', textAlign: 'left', fontFamily: 'DM Sans, sans-serif', gap: 8 }),
   faqA: { fontSize: 14, color: '#444', lineHeight: 1.7, paddingBottom: 14 },
   formGroup: { marginBottom: '1rem' },
   label: { display: 'block', fontSize: 13, color: '#666', marginBottom: 6 },
@@ -232,29 +198,41 @@ const s = {
   textarea: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', minHeight: 130, resize: 'vertical', outline: 'none', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' },
   select: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', outline: 'none', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' },
   btn: { display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 24px', fontSize: 14, fontWeight: 500, background: PURPLE, color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontFamily: 'DM Sans, sans-serif' },
-  sentMsg: { background: '#E1F5EE', borderRadius: 10, padding: '1rem 1.25rem', fontSize: 14, color: '#0F6E56', marginTop: '1rem', lineHeight: 1.6 },
-}
 
-// Kurator data
-const kuratorer = [
-  { namn: 'Mustafa Douglah', titel: 'Skolkurator', avatar: '👨‍💼', bg: '#E8E7FF' },
-  { namn: 'Jenny Elgfors', titel: 'Skolkurator', avatar: '👩‍💼', bg: '#FFE7F3' },
-]
+  // Kurator selector cards in contact form
+  kuratorSelect: { display: 'flex', gap: 10, marginBottom: '1rem' },
+  kuratorSelectCard: (selected) => ({
+    flex: 1, border: selected ? `2px solid ${PURPLE}` : '1.5px solid #d0cdc6',
+    borderRadius: 12, padding: '12px', cursor: 'pointer', textAlign: 'center',
+    background: selected ? PURPLE_LIGHT : '#fff', transition: 'all 0.15s',
+  }),
+  kuratorSelectAvatar: { fontSize: 28, display: 'block', marginBottom: 6 },
+  kuratorSelectName: { fontSize: 13, fontWeight: 600, color: '#1a1a1a', marginBottom: 2 },
+  kuratorSelectEmail: { fontSize: 11, color: '#888' },
+}
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('stod')
   const [openCard, setOpenCard] = useState(null)
   const [openFaq, setOpenFaq] = useState(null)
-  const [form, setForm] = useState({ namn: '', epost: '', amne: categories[0].title, meddelande: '' })
-  const [sent, setSent] = useState(false)
+  const [selectedKurator, setSelectedKurator] = useState(0)
+  const [form, setForm] = useState({ namn: '', amne: categories[0].title, meddelande: '' })
 
   function toggleCard(id) { setOpenCard(openCard === id ? null : id) }
   function toggleFaq(i) { setOpenFaq(openFaq === i ? null : i) }
   function handleChange(e) { setForm({ ...form, [e.target.name]: e.target.value }) }
+
   function handleSkicka() {
-    if (!form.meddelande.trim()) { alert('Skriv ett meddelande innan du skickar.'); return }
-    setSent(true)
-    setForm({ namn: '', epost: '', amne: categories[0].title, meddelande: '' })
+    if (!form.meddelande.trim()) {
+      alert('Skriv ett meddelande innan du skickar.')
+      return
+    }
+    const kurator = kuratorer[selectedKurator]
+    const subject = encodeURIComponent(`Skolkuratorn – ${form.amne}`)
+    const body = encodeURIComponent(
+      `Hej ${kurator.namn.split(' ')[0]},\n\n${form.meddelande}\n\n${form.namn ? `Från: ${form.namn}` : 'Skickat anonymt via Kuratorn-appen'}`
+    )
+    window.location.href = `mailto:${kurator.email}?subject=${subject}&body=${body}`
   }
 
   const openCat = categories.find(c => c.id === openCard)
@@ -270,7 +248,6 @@ export default function App() {
           <h1 style={s.headerTitle}>Skolkuratorerna 💙</h1>
           <p style={s.headerSub}>Vi finns här för dig – oavsett stort eller smått. Du behöver inte ha en allvarlig anledning för att prata med oss.</p>
 
-          {/* KURATOR CARDS */}
           <div style={s.kuratorsRow}>
             {kuratorer.map((k, i) => (
               <div key={i} style={s.kuratorCard}>
@@ -378,33 +355,49 @@ export default function App() {
             <div>
               <div style={s.infoBox}>
                 <span>✉️</span>
-                <span>Fyll i formuläret så skickas ditt meddelande direkt till oss. Du kan vara anonym – men ange gärna e-post om du vill ha svar.</span>
+                <span>Välj kurator och skriv ditt meddelande. När du trycker "Skicka" öppnas din mejlapp med allt ifyllt – du behöver bara trycka skicka en gång till.</span>
               </div>
+
+              {/* VÄLJ KURATOR */}
               <div style={s.formGroup}>
-                <label style={s.label}>Ditt namn (valfritt)</label>
-                <input style={s.input} name="namn" value={form.namn} onChange={handleChange} placeholder="Förnamn eller anonymt" />
+                <label style={s.label}>Välj kurator</label>
+                <div style={s.kuratorSelect}>
+                  {kuratorer.map((k, i) => (
+                    <div key={i} style={s.kuratorSelectCard(selectedKurator === i)} onClick={() => setSelectedKurator(i)}>
+                      <span style={s.kuratorSelectAvatar}>{k.avatar}</span>
+                      <div style={s.kuratorSelectName}>{k.namn}</div>
+                      <div style={s.kuratorSelectEmail}>{k.email}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
+
               <div style={s.formGroup}>
-                <label style={s.label}>Din e-post (om du vill ha svar)</label>
-                <input style={s.input} type="email" name="epost" value={form.epost} onChange={handleChange} placeholder="namn@skolan.se" />
+                <label style={s.label}>Ditt namn (valfritt – du kan vara anonym)</label>
+                <input style={s.input} name="namn" value={form.namn} onChange={handleChange} placeholder="Förnamn eller lämna tomt" />
               </div>
+
               <div style={s.formGroup}>
                 <label style={s.label}>Ämne</label>
                 <select style={s.select} name="amne" value={form.amne} onChange={handleChange}>
                   {categories.map(c => <option key={c.id}>{c.title}</option>)}
+                  <option>Boka tid</option>
                   <option>Annat</option>
                 </select>
               </div>
+
               <div style={s.formGroup}>
                 <label style={s.label}>Ditt meddelande</label>
                 <textarea style={s.textarea} name="meddelande" value={form.meddelande} onChange={handleChange} placeholder="Berätta vad du vill – det finns inga fel svar..." />
               </div>
-              <button style={s.btn} onClick={handleSkicka}>Skicka meddelande 💙</button>
-              {sent && (
-                <div style={s.sentMsg}>
-                  Ditt meddelande har skickats. Vi hör av oss så snart som möjligt. Tack för att du vågade ta steget. 💙
-                </div>
-              )}
+
+              <button style={s.btn} onClick={handleSkicka}>
+                Öppna mejlappen och skicka 💙
+              </button>
+
+              <p style={{ fontSize: 12, color: '#888', marginTop: 10, lineHeight: 1.6 }}>
+                Din mejlapp öppnas med meddelandet färdigskrivet till {kuratorer[selectedKurator].namn}. Du skickar det därifrån.
+              </p>
             </div>
           )}
 
