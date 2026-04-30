@@ -107,7 +107,7 @@ const categories = [
       'Undvik att jämföra dig med vad du ser på sociala medier – det är inte verkligheten.',
       'Skriv ner vad du är bra på och vad du gillar – fokusera på det.',
       'Om du funderar på din könsidentitet eller sexualitet – det finns stöd och information.',
-      'Prata med kuratorn om det känns tungt – det är helt konfidentiellt.',
+      'Prata med kuratorn om det är jobbigt – vi har tystnadsplikt. Det du berättar stannar hos oss, om det inte handlar om att du far illa.',
     ],
     links: [
       { text: 'RFSL Ungdom – om identitet', url: 'https://www.rfslungdom.se' },
