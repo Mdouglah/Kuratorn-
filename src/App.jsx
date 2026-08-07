@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 const categories = [
   {
@@ -107,7 +107,7 @@ const categories = [
       'Undvik att jämföra dig med vad du ser på sociala medier – det är inte verkligheten.',
       'Skriv ner vad du är bra på och vad du gillar – fokusera på det.',
       'Om du funderar på din könsidentitet eller sexualitet – det finns stöd och information.',
-      'Prata med kuratorn om det känns tungt – det är helt konfidentiellt.',
+      'Prata med kuratorn om det är jobbigt – det stannar hos oss.',
     ],
     links: [
       { text: 'RFSL Ungdom – om identitet', url: 'https://www.rfslungdom.se' },
@@ -149,16 +149,9 @@ const s = {
   headerSub: { fontSize: 14, color: '#666', lineHeight: 1.6, maxWidth: 440, margin: '0 auto 1.5rem' },
   kuratorsRow: { display: 'flex', gap: 12, justifyContent: 'center', marginBottom: '0.5rem', flexWrap: 'wrap' },
   kuratorCard: {
-    background: '#fff',
-    border: `1px solid ${PURPLE_MID}`,
-    borderRadius: 16,
-    padding: '1rem 1.25rem',
-    display: 'flex',
-    alignItems: 'center',
-    gap: 12,
-    minWidth: 200,
-    flex: '1 1 200px',
-    maxWidth: 280,
+    background: '#fff', border: `1px solid ${PURPLE_MID}`, borderRadius: 16,
+    padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: 12,
+    minWidth: 200, flex: '1 1 200px', maxWidth: 280,
   },
   kuratorAvatar: { width: 52, height: 52, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, flexShrink: 0 },
   kuratorName: { fontSize: 14, fontWeight: 600, color: '#1a1a1a', marginBottom: 2 },
@@ -173,7 +166,11 @@ const s = {
   }),
   content: { padding: '1.5rem 1.25rem' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10, marginBottom: '1.5rem' },
-  card: (open) => ({ background: open ? PURPLE_LIGHT : '#fff', border: open ? `1.5px solid ${PURPLE}` : `1px solid #e0ddd6`, borderRadius: 14, padding: '1rem', cursor: 'pointer', transition: 'all 0.15s' }),
+  card: (open) => ({
+    background: open ? PURPLE_LIGHT : '#fff',
+    border: open ? `1.5px solid ${PURPLE}` : `1px solid #e0ddd6`,
+    borderRadius: 14, padding: '1rem', cursor: 'pointer', transition: 'all 0.15s',
+  }),
   cardIcon: { fontSize: 22, marginBottom: 8, display: 'block' },
   cardTitle: { fontSize: 14, fontWeight: 500, color: '#1a1a1a', marginBottom: 4 },
   cardSub: { fontSize: 12, color: '#888', lineHeight: 1.5 },
@@ -191,7 +188,13 @@ const s = {
   bokningTitle: { fontSize: 15, fontWeight: 600, marginBottom: 8, color: '#1a1a1a' },
   bokningText: { fontSize: 14, color: '#555', lineHeight: 1.7 },
   faqItem: { borderBottom: `1px solid #ece9f6`, overflow: 'hidden' },
-  faqQ: (open) => ({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', cursor: 'pointer', fontSize: 14, fontWeight: open ? 500 : 400, color: open ? PURPLE : '#1a1a1a', background: 'none', border: 'none', width: '100%', textAlign: 'left', fontFamily: 'DM Sans, sans-serif', gap: 8 }),
+  faqQ: (open) => ({
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    padding: '14px 0', cursor: 'pointer', fontSize: 14,
+    fontWeight: open ? 500 : 400, color: open ? PURPLE : '#1a1a1a',
+    background: 'none', border: 'none', width: '100%', textAlign: 'left',
+    fontFamily: 'DM Sans, sans-serif', gap: 8,
+  }),
   faqA: { fontSize: 14, color: '#444', lineHeight: 1.7, paddingBottom: 14 },
   formGroup: { marginBottom: '1rem' },
   label: { display: 'block', fontSize: 13, color: '#666', marginBottom: 6 },
@@ -199,8 +202,6 @@ const s = {
   textarea: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', minHeight: 130, resize: 'vertical', outline: 'none', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' },
   select: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', outline: 'none', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' },
   btn: { display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 24px', fontSize: 14, fontWeight: 500, background: PURPLE, color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontFamily: 'DM Sans, sans-serif' },
-
-  // Kurator selector cards in contact form
   kuratorSelect: { display: 'flex', gap: 10, marginBottom: '1rem' },
   kuratorSelectCard: (selected) => ({
     flex: 1, border: selected ? `2px solid ${PURPLE}` : '1.5px solid #d0cdc6',
@@ -218,16 +219,23 @@ export default function App() {
   const [openFaq, setOpenFaq] = useState(null)
   const [selectedKurator, setSelectedKurator] = useState(0)
   const [form, setForm] = useState({ namn: '', amne: categories[0].title, meddelande: '' })
+  const expandRef = useRef(null)
 
-  function toggleCard(id) { setOpenCard(openCard === id ? null : id) }
+  function toggleCard(id) {
+    const isOpening = openCard !== id
+    setOpenCard(isOpening ? id : null)
+    if (isOpening) {
+      setTimeout(() => {
+        expandRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 50)
+    }
+  }
+
   function toggleFaq(i) { setOpenFaq(openFaq === i ? null : i) }
   function handleChange(e) { setForm({ ...form, [e.target.name]: e.target.value }) }
 
   function handleSkicka() {
-    if (!form.meddelande.trim()) {
-      alert('Skriv ett meddelande innan du skickar.')
-      return
-    }
+    if (!form.meddelande.trim()) { alert('Skriv ett meddelande innan du skickar.'); return }
     const kurator = kuratorer[selectedKurator]
     const subject = encodeURIComponent(`Skolkuratorn – ${form.amne}`)
     const body = encodeURIComponent(
@@ -248,7 +256,6 @@ export default function App() {
         <div style={s.headerBg}>
           <h1 style={s.headerTitle}>Skolkuratorerna 💙</h1>
           <p style={s.headerSub}>Vi finns här för dig – oavsett stort eller smått. Du behöver inte ha en allvarlig anledning för att prata med oss.</p>
-
           <div style={s.kuratorsRow}>
             {kuratorer.map((k, i) => (
               <div key={i} style={s.kuratorCard}>
@@ -283,6 +290,9 @@ export default function App() {
                   </div>
                 ))}
               </div>
+
+              {/* Auto-scroll target */}
+              <div ref={expandRef} />
 
               {openCat && (
                 <div style={s.expand}>
@@ -356,10 +366,9 @@ export default function App() {
             <div>
               <div style={s.infoBox}>
                 <span>✉️</span>
-                <span>Välj kurator och skriv ditt meddelande. När du trycker "Skicka" öppnas din mejlapp med allt ifyllt – du behöver bara trycka skicka en gång till.</span>
+                <span>Välj kurator och skriv ditt meddelande. När du trycker "Skicka" öppnas din mejlapp med allt ifyllt.</span>
               </div>
 
-              {/* VÄLJ KURATOR */}
               <div style={s.formGroup}>
                 <label style={s.label}>Välj kurator</label>
                 <div style={s.kuratorSelect}>
@@ -397,7 +406,7 @@ export default function App() {
               </button>
 
               <p style={{ fontSize: 12, color: '#888', marginTop: 10, lineHeight: 1.6 }}>
-                Din mejlapp öppnas med meddelandet färdigskrivet till {kuratorer[selectedKurator].namn}. Du skickar det därifrån.
+                Din mejlapp öppnas med meddelandet färdigskrivet till {kuratorer[selectedKurator].namn}.
               </p>
             </div>
           )}
