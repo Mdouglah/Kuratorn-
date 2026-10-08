@@ -1,0 +1,230 @@
+/* Typsnitt som ligger i appen (public/fonts), så att inget hämtas från Google. */
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/newsreader-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/newsreader-latin-400-italic.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/dm-sans-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/dm-sans-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/dm-sans-latin-600-normal.woff2') format('woff2'); }
+
+/* Skydd mot gamla globala stilar (till exempel från Vites mall) */
+html, body { margin: 0; padding: 0; background: #f5f3ec; }
+body { display: block; min-width: 320px; }
+#root { max-width: none; margin: 0; padding: 0; text-align: left; width: 100%; }
+
+/* ==========================================================
+   NORVAY TEMA v1 – gemensam bas för alla verktyg
+   Klistra in hela filen överst i appens <style>, eller lägg den
+   som en egen fil. Sätt data-kategori på <body> eller en wrapper:
+   skola | elevhalsa | familj
+   ========================================================== */
+
+:root {
+  /* Samma i alla verktyg */
+  --n-bg: #f5f3ec;
+  --n-surface: #ffffff;
+  --n-ink: #123f37;
+  --n-ink-soft: #4f6b63;
+  --n-line: rgba(18, 63, 55, 0.14);
+  --n-terracotta: #c9785f;       /* bara för stor text och former */
+  --n-terracotta-soft: #dd9479;
+  --n-radius: 20px;
+  --n-radius-sm: 12px;
+  --n-font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --n-font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Varierar efter kategori (standard: skola) */
+  --n-accent: #2f6b5a;
+  --n-tint: #d7e2d7;
+  --n-on-accent: #ffffff;
+}
+
+[data-kategori="skola"]     { --n-accent: #2f6b5a; --n-tint: #d7e2d7; }
+[data-kategori="elevhalsa"] { --n-accent: #8a5a1f; --n-tint: #ecdfc8; }
+[data-kategori="familj"]    { --n-accent: #6f5f8f; --n-tint: #e4dfec; }
+
+/* ---------- Bas ---------- */
+.n-body {
+  margin: 0;
+  background: var(--n-bg);
+  color: var(--n-ink);
+  font-family: var(--n-font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.n-body *, .n-body *::before, .n-body *::after { box-sizing: border-box; }
+
+.n-wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+.n-h {
+  font-family: var(--n-font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  margin: 0 0 16px;
+}
+.n-h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+.n-h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); }
+.n-h3 { font-size: 1.3rem; line-height: 1.2; }
+.n-h em { font-style: italic; color: var(--n-terracotta); } /* endast stora rubriker */
+
+.n-lead { font-size: 1.1rem; color: var(--n-ink-soft); max-width: 52ch; }
+.n-small { font-size: 0.9rem; color: var(--n-ink-soft); }
+
+a { color: inherit; }
+.n-link { color: var(--n-accent); text-underline-offset: 3px; }
+
+/* ---------- Sidhuvud och sidfot (samma i alla verktyg) ---------- */
+.n-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--n-line);
+}
+.n-back { font-size: 0.95rem; font-weight: 500; text-decoration: none; color: var(--n-ink-soft); }
+.n-back:hover { color: var(--n-ink); }
+.n-brand {
+  display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  font-weight: 600; font-size: 0.8rem; letter-spacing: 0.22em;
+}
+.n-mark {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1.5px solid var(--n-ink);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--n-font-display); font-size: 1rem; letter-spacing: 0;
+}
+.n-footer {
+  display: flex; flex-wrap: wrap; gap: 8px 24px;
+  padding: 28px 0 40px; margin-top: 64px;
+  border-top: 1px solid var(--n-line);
+  font-size: 0.9rem; color: var(--n-ink-soft);
+}
+.n-footer a { text-underline-offset: 3px; }
+
+/* ---------- Knappar ---------- */
+.n-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--n-font-body); font-size: 1rem; font-weight: 600;
+  padding: 13px 24px; border-radius: 999px; border: 1.5px solid var(--n-accent);
+  background: var(--n-accent); color: var(--n-on-accent);
+  text-decoration: none; cursor: pointer; transition: transform .15s ease, background .15s ease;
+}
+.n-btn:hover { transform: translateY(-1px); }
+.n-btn--ghost { background: transparent; color: var(--n-accent); }
+.n-btn--ghost:hover { background: var(--n-tint); }
+
+/* ---------- Kort och etiketter ---------- */
+.n-card {
+  background: var(--n-surface); border: 1px solid var(--n-line);
+  border-radius: var(--n-radius); padding: 24px;
+}
+.n-card--tint { background: var(--n-tint); border-color: transparent; }
+.n-chip {
+  display: inline-block; font-size: 0.82rem; font-weight: 600;
+  padding: 5px 12px; border-radius: 999px;
+  background: var(--n-tint); color: var(--n-accent);
+}
+
+/* ---------- Layoutvarianter för hero (välj en per verktyg) ---------- */
+.n-hero { padding: 56px 0 24px; }
+.n-hero--split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+.n-hero--stack { display: grid; gap: 28px; justify-items: start; }
+.n-hero--stack .n-motif { max-width: 220px; }
+.n-hero--band {
+  background: var(--n-tint); border-radius: 32px; padding: 48px;
+  display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+}
+@media (max-width: 720px) {
+  .n-hero--split, .n-hero--band { grid-template-columns: 1fr; }
+  .n-hero--band { padding: 32px 24px; }
+  .n-motif { max-width: 220px; }
+}
+
+/* ---------- Former (välj en per verktyg) ---------- */
+.n-motif { position: relative; width: 100%; aspect-ratio: 1; max-width: 320px; }
+.n-motif::before, .n-motif::after { content: ""; position: absolute; }
+.n-motif--arc::before     { inset: 20% 15% 0 15%; background: var(--n-tint); border-radius: 999px 999px 0 0; }
+.n-motif--arc::after      { width: 26%; aspect-ratio: 1; border-radius: 50%; background: var(--n-terracotta-soft); top: 10%; right: 10%; }
+.n-motif--circle::before  { inset: 10%; border-radius: 50%; background: var(--n-tint); }
+.n-motif--circle::after   { inset: 0; border-radius: 50%; border: 2px dotted var(--n-accent); opacity: .55; }
+.n-motif--quarter::before { inset: 10% 0 0 10%; background: var(--n-tint); border-radius: 100% 0 0 0; }
+.n-motif--quarter::after  { width: 22%; aspect-ratio: 1; background: var(--n-accent); border-radius: 50%; left: 6%; top: 6%; }
+.n-motif--square::before  { inset: 14%; background: var(--n-tint); border-radius: 28%; transform: rotate(8deg); }
+.n-motif--square::after   { width: 30%; aspect-ratio: 1; background: var(--n-terracotta-soft); border-radius: 50%; bottom: 6%; right: 8%; }
+
+/* ---------- Tillgänglighet ---------- */
+.n-body :focus-visible { outline: 3px solid var(--n-accent); outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) {
+  .n-body *, .n-body *::before, .n-body *::after {
+    animation: none !important; transition: none !important;
+  }
+}
+
+/* ==========================================================
+   Kuratorn – egna stilar (bygger på Norvay-temat ovan)
+   ========================================================== */
+.k-root { min-height: 100vh; }
+.k-hero { padding-top: 40px; }
+.k-kurators { list-style: none; padding: 0; margin: 28px 0 0; display: flex; flex-wrap: wrap; gap: 12px; }
+.k-kcard { display: flex; align-items: center; gap: 12px; background: var(--n-surface); border: 1px solid var(--n-line); border-radius: var(--n-radius); padding: 12px 18px 12px 12px; }
+.k-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--n-tint); color: var(--n-accent); display: inline-flex; align-items: center; justify-content: center; font-family: var(--n-font-display); font-size: 1.15rem; flex-shrink: 0; }
+.k-kname { display: block; font-weight: 600; }
+.k-ktitle { display: block; font-size: 0.88rem; color: var(--n-ink-soft); }
+
+.k-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 40px 0 28px; padding-bottom: 20px; border-bottom: 1px solid var(--n-line); }
+.k-tab { font: inherit; font-weight: 600; font-size: 0.95rem; padding: 9px 18px; border-radius: 999px; border: 1.5px solid var(--n-line); background: transparent; color: var(--n-ink-soft); cursor: pointer; }
+.k-tab:hover { border-color: var(--n-ink); color: var(--n-ink); }
+.k-tab[aria-current="true"] { background: var(--n-ink); border-color: var(--n-ink); color: var(--n-bg); }
+
+.k-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.k-cat { font: inherit; text-align: left; cursor: pointer; background: var(--n-surface); border: 1.5px solid var(--n-line); border-radius: var(--n-radius); padding: 20px; display: grid; gap: 6px; color: var(--n-ink); transition: transform .15s ease, border-color .15s ease; }
+.k-cat:hover { transform: translateY(-2px); border-color: var(--n-accent); }
+.k-cat[aria-expanded="true"] { background: var(--n-tint); border-color: var(--n-accent); }
+.k-cat-icon { font-size: 1.6rem; line-height: 1; }
+.k-cat-title { font-family: var(--n-font-display); font-size: 1.2rem; line-height: 1.2; }
+.k-cat-sub { font-size: 0.9rem; color: var(--n-ink-soft); line-height: 1.45; }
+
+.k-detalj { background: var(--n-tint); border-radius: var(--n-radius); padding: 28px; margin-bottom: 24px; scroll-margin-top: 16px; }
+.k-label { font-size: 0.85rem; font-weight: 600; color: var(--n-accent); margin: 22px 0 8px; }
+.k-tips, .k-links { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.k-tips li { position: relative; padding-left: 22px; }
+.k-tips li::before { content: ""; position: absolute; left: 2px; top: 0.7em; width: 8px; height: 8px; border-radius: 50%; background: var(--n-accent); }
+.k-sekretess { margin: 28px 0 0; color: var(--n-ink-soft); max-width: 62ch; }
+.k-steg { padding-left: 22px; display: grid; gap: 10px; margin: 8px 0 16px; }
+
+.k-faq { border-bottom: 1px solid var(--n-line); }
+.k-faq-h { margin: 0; font: inherit; }
+.k-faq-q { font: inherit; font-weight: 500; width: 100%; text-align: left; background: none; border: 0; padding: 18px 0; display: flex; justify-content: space-between; gap: 16px; cursor: pointer; color: var(--n-ink); }
+.k-faq-q[aria-expanded="true"] { color: var(--n-accent); }
+.k-faq-pm { font-size: 1.4rem; line-height: 1; }
+.k-faq-a { margin: 0 0 18px; max-width: 62ch; color: var(--n-ink-soft); }
+
+.k-field { margin-top: 22px; }
+.k-fieldset { border: 0; padding: 0; margin-left: 0; margin-right: 0; min-width: 0; }
+.k-lbl { display: block; font-weight: 600; margin-bottom: 8px; padding: 0; }
+.k-input { width: 100%; font: inherit; padding: 12px 14px; border: 1.5px solid var(--n-line); border-radius: var(--n-radius-sm); background: var(--n-surface); color: var(--n-ink); }
+.k-input:focus-visible { outline: 3px solid var(--n-accent); outline-offset: 2px; }
+.k-area { min-height: 150px; resize: vertical; }
+.k-small { font-size: 0.88rem; color: var(--n-ink-soft); margin: 8px 0 0; }
+.k-fel { color: #9b2c1b; font-weight: 600; margin: 16px 0 0; }
+.k-radios { display: flex; flex-wrap: wrap; gap: 10px; }
+.k-radio { display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; border: 1.5px solid var(--n-line); border-radius: var(--n-radius); background: var(--n-surface); cursor: pointer; }
+.k-radio input { position: absolute; opacity: 0; pointer-events: none; }
+.k-radio.is-on { border-color: var(--n-accent); background: var(--n-tint); }
+.k-radio:focus-within { outline: 3px solid var(--n-accent); outline-offset: 2px; }
+.k-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.k-row > .k-input { flex: 1 1 200px; width: auto; }
+.k-textbtn { font: inherit; background: none; border: 0; color: var(--n-accent); text-decoration: underline; cursor: pointer; padding: 8px 0 0; }
+
+.k-akut { margin-top: 56px; background: var(--n-surface); border: 1px solid var(--n-line); border-radius: var(--n-radius); padding: 24px; }
+.k-akut p { margin: 0 0 8px; }
+.k-akut-lista { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.k-ansvar { margin-top: -28px; padding-bottom: 28px; }
+
+.k-setup { display: block; }
+.k-resultat { margin-top: 28px; }
+.k-lank { word-break: break-all; font-size: 0.9rem; background: var(--n-tint); padding: 12px 14px; border-radius: var(--n-radius-sm); }
+.k-qr { margin: 24px 0; display: grid; gap: 10px; justify-items: start; }
+.k-qr img { border-radius: 12px; border: 1px solid var(--n-line); }
+
+@media (max-width: 720px) {
+  .k-hero { padding-top: 24px; }
+  .k-detalj { padding: 20px; }
+}
