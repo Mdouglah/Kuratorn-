@@ -16,7 +16,7 @@ const categories = [
       'Sov tillräckligt – hjärnan behöver sömn för att hantera känslor.',
     ],
     links: [
-      { text: 'UMO – Ungdomsmottagningen (mående)', url: 'https://www.umo.se/mående' },
+      { text: 'UMO – om att må dåligt', url: 'https://www.umo.se/att-ma-daligt/' },
       { text: 'BRIS – stöd dygnet runt', url: 'https://www.bris.se' },
       { text: '1177 – psykisk hälsa för unga', url: 'https://www.1177.se' },
     ],
@@ -36,7 +36,7 @@ const categories = [
     ],
     links: [
       { text: 'BRIS – chatta med en vuxen', url: 'https://www.bris.se' },
-      { text: 'UMO – om relationer', url: 'https://www.umo.se/relationer' },
+      { text: 'UMO – kärlek och vänskap', url: 'https://www.umo.se/karlek-och-vanskap/' },
     ],
   },
   {
@@ -73,7 +73,7 @@ const categories = [
       'Jämför dig inte med andra – alla lär sig i sin egen takt.',
     ],
     links: [
-      { text: 'UMO – om skolstress', url: 'https://www.umo.se' },
+      { text: 'UMO – om skolan', url: 'https://www.umo.se/jag/skolan/' },
       { text: 'Skolverket – stöd i skolan', url: 'https://www.skolverket.se' },
     ],
   },
@@ -86,14 +86,14 @@ const categories = [
     tips: [
       'Du ansvarar inte för vuxnas problem hemma – det är inte ditt fel.',
       'Om du känner dig otrygg hemma, prata med en vuxen du litar på på skolan.',
-      'Kuratorn har tystnadsplikt och kan hjälpa dig utan att du riskerar att det blir värre.',
+      'Kuratorn har tystnadsplikt och kan hjälpa dig. Om du eller någon annan far illa måste kuratorn ibland agera, och berättar då för dig hur.',
       'Du har rätt till en trygg uppväxt – det är lagen.',
       'Om det är akut och du är i fara, ring 112 eller SOS Alarm.',
     ],
     links: [
       { text: 'BRIS – jouren för barn och unga', url: 'https://www.bris.se' },
       { text: 'Rädda Barnen – stöd för unga', url: 'https://www.raddabarnen.se' },
-      { text: 'Socialtjänsten – anonym rådgivning', url: 'https://www.socialstyrelsen.se' },
+      { text: 'UMO – familj', url: 'https://www.umo.se/familj/' },
     ],
   },
   {
@@ -107,11 +107,11 @@ const categories = [
       'Undvik att jämföra dig med vad du ser på sociala medier – det är inte verkligheten.',
       'Skriv ner vad du är bra på och vad du gillar – fokusera på det.',
       'Om du funderar på din könsidentitet eller sexualitet – det finns stöd och information.',
-      'Prata med kuratorn om det är jobbigt – det stannar hos oss.',
+      'Prata med kuratorn om det är jobbigt – kuratorn har tystnadsplikt.',
     ],
     links: [
       { text: 'RFSL Ungdom – om identitet', url: 'https://www.rfslungdom.se' },
-      { text: 'UMO – om kropp och identitet', url: 'https://www.umo.se/kropp-och-kansla' },
+      { text: 'UMO – självkänsla', url: 'https://www.umo.se/ma-bra/sjalvkansla-och-sjalvfortroende/sjalvkansla/' },
       { text: 'BRIS – chatta anonymt', url: 'https://www.bris.se' },
     ],
   },
@@ -122,6 +122,7 @@ const faqItems = [
   { q: 'Måste jag berätta varför jag vill prata?', a: 'Nej! Du kan boka tid eller komma förbi utan att förklara exakt vad det gäller. Det räcker med att du vill prata.' },
   { q: 'Berättar kuratorn för mina föräldrar?', a: 'Kuratorn har tystnadsplikt. Det du berättar stannar hos kuratorn – med undantag om det handlar om att du eller någon annan far illa, då kan kuratorn behöva agera.' },
   { q: 'Vad händer om jag skickar ett mejl via appen?', a: 'När du trycker på "Skicka" öppnas din mejlapp med ett färdigskrivet meddelande till kuratorn. Du kan skicka det direkt eller ändra det först.' },
+  { q: 'Är mejlet anonymt?', a: 'Nej. Mejlet skickas från din egen mejladress, så kuratorn ser vem du är, även om du inte skriver ditt namn. Vill du inte det kan du i stället komma förbi eller fråga din mentor om en tid.' },
   { q: 'Kan jag prata med kuratorn om en kompis?', a: 'Ja, absolut. Du kan berätta om du är orolig för en vän och få råd om hur du kan hjälpa.' },
   { q: 'Kostar det något?', a: 'Nej, kuratorns tjänster är helt kostnadsfria för alla elever på skolan.' },
   { q: 'Måste jag ha en allvarlig anledning?', a: 'Nej! Du kan komma till kuratorn för stort och smått. Ingen anledning är för liten.' },
@@ -136,6 +137,8 @@ const kuratorer = [
 const PURPLE = '#534AB7'
 const PURPLE_LIGHT = '#EEEDFE'
 const PURPLE_MID = '#dddaf5'
+const FONT = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+const MAX_TECKEN = 900
 
 const s = {
   app: { maxWidth: 720, margin: '0 auto', padding: '0 0 3rem' },
@@ -161,7 +164,7 @@ const s = {
     padding: '12px 8px', fontSize: 13, color: a ? PURPLE : '#888', cursor: 'pointer',
     borderBottom: a ? `2px solid ${PURPLE}` : '2px solid transparent', marginBottom: -1,
     background: 'none', border: 'none', fontWeight: a ? 500 : 400,
-    fontFamily: 'DM Sans, sans-serif', textAlign: 'center', width: '100%',
+    fontFamily: FONT, textAlign: 'center', width: '100%',
     borderRight: '1px solid #e0ddd6',
   }),
   content: { padding: '1.5rem 1.25rem' },
@@ -193,15 +196,15 @@ const s = {
     padding: '14px 0', cursor: 'pointer', fontSize: 14,
     fontWeight: open ? 500 : 400, color: open ? PURPLE : '#1a1a1a',
     background: 'none', border: 'none', width: '100%', textAlign: 'left',
-    fontFamily: 'DM Sans, sans-serif', gap: 8,
+    fontFamily: FONT, gap: 8,
   }),
   faqA: { fontSize: 14, color: '#444', lineHeight: 1.7, paddingBottom: 14 },
   formGroup: { marginBottom: '1rem' },
   label: { display: 'block', fontSize: 13, color: '#666', marginBottom: 6 },
-  input: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', outline: 'none', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' },
-  textarea: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', minHeight: 130, resize: 'vertical', outline: 'none', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' },
-  select: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', outline: 'none', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' },
-  btn: { display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 24px', fontSize: 14, fontWeight: 500, background: PURPLE, color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontFamily: 'DM Sans, sans-serif' },
+  input: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', outline: 'none', fontFamily: FONT, boxSizing: 'border-box' },
+  textarea: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', minHeight: 130, resize: 'vertical', outline: 'none', fontFamily: FONT, boxSizing: 'border-box' },
+  select: { width: '100%', fontSize: 14, padding: '10px 12px', border: '1px solid #d0cdc6', borderRadius: 8, background: '#fff', color: '#1a1a1a', outline: 'none', fontFamily: FONT, boxSizing: 'border-box' },
+  btn: { display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 24px', fontSize: 14, fontWeight: 500, background: PURPLE, color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontFamily: FONT },
   kuratorSelect: { display: 'flex', gap: 10, marginBottom: '1rem' },
   kuratorSelectCard: (selected) => ({
     flex: 1, border: selected ? `2px solid ${PURPLE}` : '1.5px solid #d0cdc6',
@@ -239,7 +242,7 @@ export default function App() {
     const kurator = kuratorer[selectedKurator]
     const subject = encodeURIComponent(`Skolkuratorn – ${form.amne}`)
     const body = encodeURIComponent(
-      `Hej ${kurator.namn.split(' ')[0]},\n\n${form.meddelande}\n\n${form.namn ? `Från: ${form.namn}` : 'Skickat anonymt via Kuratorn-appen'}`
+      `Hej ${kurator.namn.split(' ')[0]},\n\n${form.meddelande}\n\n${form.namn ? `Från: ${form.namn}` : 'Skickat via Kuratorn-appen'}`
     )
     window.location.href = `mailto:${kurator.email}?subject=${subject}&body=${body}`
   }
@@ -247,8 +250,7 @@ export default function App() {
   const openCat = categories.find(c => c.id === openCard)
 
   return (
-    <div style={{ fontFamily: 'DM Sans, sans-serif', background: '#faf9ff', minHeight: '100vh' }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <div style={{ fontFamily: FONT, background: '#faf9ff', minHeight: '100vh' }}>
 
       <div style={s.app}>
 
@@ -366,7 +368,7 @@ export default function App() {
             <div>
               <div style={s.infoBox}>
                 <span>✉️</span>
-                <span>Välj kurator och skriv ditt meddelande. När du trycker "Skicka" öppnas din mejlapp med allt ifyllt.</span>
+                <span>Välj kurator och skriv ditt meddelande. När du trycker "Skicka" öppnas din mejlapp med allt ifyllt. Mejlet skickas från din egen mejladress, så kuratorn ser vem du är.</span>
               </div>
 
               <div style={s.formGroup}>
@@ -383,7 +385,7 @@ export default function App() {
               </div>
 
               <div style={s.formGroup}>
-                <label style={s.label}>Ditt namn (valfritt – du kan vara anonym)</label>
+                <label style={s.label}>Ditt namn (valfritt)</label>
                 <input style={s.input} name="namn" value={form.namn} onChange={handleChange} placeholder="Förnamn eller lämna tomt" />
               </div>
 
@@ -398,7 +400,8 @@ export default function App() {
 
               <div style={s.formGroup}>
                 <label style={s.label}>Ditt meddelande</label>
-                <textarea style={s.textarea} name="meddelande" value={form.meddelande} onChange={handleChange} placeholder="Berätta vad du vill – det finns inga fel svar..." />
+                <textarea style={s.textarea} name="meddelande" value={form.meddelande} onChange={handleChange} maxLength={MAX_TECKEN} placeholder="Berätta vad du vill – det finns inga fel svar..." />
+                <p style={{ fontSize: 12, color: '#888', margin: '6px 0 0' }}>{form.meddelande.length} av {MAX_TECKEN} tecken. Vill du skriva mer kan du ta det på plats.</p>
               </div>
 
               <button style={s.btn} onClick={handleSkicka}>
@@ -406,11 +409,18 @@ export default function App() {
               </button>
 
               <p style={{ fontSize: 12, color: '#888', marginTop: 10, lineHeight: 1.6 }}>
-                Din mejlapp öppnas med meddelandet färdigskrivet till {kuratorer[selectedKurator].namn}.
+                Din mejlapp öppnas med meddelandet färdigskrivet till {kuratorer[selectedKurator].namn}. Öppnas ingen mejlapp? Skriv då själv till {kuratorer[selectedKurator].email}.
               </p>
             </div>
           )}
 
+        </div>
+
+        <div style={{ ...s.infoBox, margin: '0 1.25rem' }}>
+          <span>🆘</span>
+          <span>
+            <strong>Behöver du prata med någon just nu?</strong> Är du i fara, ring 112. Barnens telefon BRIS: <a href="tel:116111" style={s.link}>116 111</a>. Mind Självmordslinjen: <a href="tel:90101" style={s.link}>90101</a>.
+          </span>
         </div>
       </div>
     </div>
